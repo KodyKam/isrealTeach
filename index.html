@@ -621,18 +621,52 @@
                 height: 100vh;
                 background: var(--primary);
                 flex-direction: column;
-                padding: 5rem 2rem 2rem;
+                padding: 2rem;
                 gap: 1.5rem;
-                transition: right 0.3s;
+                transition: right 0.3s ease;
                 box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+                z-index: 1000;
             }
 
             .nav-menu.active {
                 right: 0;
             }
 
+            .nav-close-wrapper {
+                display: flex;
+                justify-content: flex-end;
+                list-style: none;
+            }
+
+            .nav-close {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 2rem;
+                cursor: pointer;
+            }
+
             .mobile-toggle {
                 display: block;
+            }
+
+            /* Menu Backdrop Dimming */
+            .menu-backdrop {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.4);
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease;
+                z-index: 900; /* below the menu but above content */
+            }
+
+            .menu-backdrop.active {
+                opacity: 1;
+                visibility: visible;
             }
 
             .hero h1 {
@@ -701,6 +735,7 @@
     </style>
 </head>
 <body>
+    <div id="menuBackdrop" class="menu-backdrop"></div>
     <!-- Header -->
     <header class="header">
         <div class="top-bar">
@@ -713,6 +748,10 @@
                 <span>The Household of Faith</span>
             </div>
             <ul class="nav-menu" id="navMenu">
+                <li class="nav-close-wrapper">
+                    <button id="navClose" class="nav-close">✕</button>
+                </li>
+
                 <li><a href="#home">Home</a></li>
                 <li><a href="#locations">Locations</a></li>
                 <li><a href="#about">About</a></li>
@@ -927,10 +966,20 @@
         // Mobile menu toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
+        const navClose = document.getElementById('navClose');
 
         mobileToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            mobileToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+            navMenu.classList.add('active');
+        });
+
+        navClose.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
         });
 
         // Close mobile menu when clicking a link
@@ -939,6 +988,24 @@
                 navMenu.classList.remove('active');
                 mobileToggle.textContent = '☰';
             });
+        });
+
+        // Toggle backdrop when mobile menu is active
+        const menuBackdrop = document.getElementById('menuBackdrop');
+
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.add('active');
+            menuBackdrop.classList.add('active');
+        });
+
+        navClose.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            menuBackdrop.classList.remove('active');
+        });
+
+        menuBackdrop.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            menuBackdrop.classList.remove('active');
         });
 
         // Smooth scrolling for anchor links
