@@ -987,6 +987,7 @@
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
                 mobileToggle.textContent = '☰';
+                menuBackdrop.classList.remove('active'); // I just added this to close the backdrop when a link is clicked
             });
         });
 
