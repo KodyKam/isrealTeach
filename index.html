@@ -263,6 +263,10 @@
             margin-bottom: 3rem;
         }
 
+        .nav-close {
+            display: none; /* Hide the close button for large screens */
+        }
+
         .section-title h2 {
             font-family: 'Crimson Pro', serif;
             font-size: 2.5rem;
@@ -644,6 +648,7 @@
                 color: white;
                 font-size: 2rem;
                 cursor: pointer;
+                display: block; /* show close button on mobile */
             }
 
             .mobile-toggle {
@@ -738,10 +743,10 @@
     <div id="menuBackdrop" class="menu-backdrop"></div>
     <!-- Header -->
     <header class="header">
-        <div class="top-bar">
-            <a href="tel:2192387492">Gary: (219) 238-7492</a>
-            <a href="tel:5408728455">Stafford: (540) 872-8455</a>
-        </div>
+        <!-- <div class="top-bar">
+            <a href="tel:2192387492">📞 Gary: (219) 238-7492</a>
+            <a href="tel:5408728455">📞 Stafford: (540) 872-8455</a> MIGHT BECOME RELEVANT IN FUTURE AS LOCATIONS ARE ADDED
+        </div> -->
         <nav class="nav-container">
             <div class="logo">
                 <div class="logo-icon">H</div>
@@ -796,7 +801,7 @@
                     </div>
                     <div class="info-item">
                         <span class="info-icon">📞</span>
-                        <div>(219) 238-7492</div>
+                        <div><a href="tel:2192387492">Gary: (219) 238-7492</a></div>
                     </div>
                     <div class="info-item">
                         <span class="info-icon">✉️</span>
@@ -822,7 +827,7 @@
                     </div>
                     <div class="info-item">
                         <span class="info-icon">📞</span>
-                        <div>(540) 872-8455</div>
+                        <div><a href="tel:5408728455">Stafford: (540) 872-8455</a></div>
                     </div>
                     <div class="info-item">
                         <span class="info-icon">✉️</span>
