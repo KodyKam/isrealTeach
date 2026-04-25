@@ -421,6 +421,99 @@
             margin: 0;
         }
 
+        /* Image Carousel Styles */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    background: var(--primary);
+}
+
+.carousel-slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    aspect-ratio: 4/3;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 10;
+}
+
+.carousel-prev {
+    left: 15px;
+}
+
+.carousel-next {
+    right: 15px;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    background: var(--accent);
+    color: var(--primary);
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.carousel-dot.active {
+    background: var(--accent);
+    width: 25px;
+    border-radius: 5px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .carousel-prev,
+    .carousel-next {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+}
+
         .about-image {
             position: relative;
         }
@@ -860,45 +953,58 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="about-content">
-            <div class="about-text">
-                <h2>About The Household of Faith</h2>
-                <p>The Household Of Faith welcomes you to join our service every Sabbath day as we explore the depths of Biblical truth together.</p>
-                <p>Our ministry is dedicated to teaching the uncut word of God, covering everything from prophecy to the laws stipulated in the Holy Bible through comprehensive, in-depth lessons.</p>
-                
-                <div class="features">
-                    <div class="feature-item">
-                        <div class="feature-icon">📖</div>
-                        <div class="feature-content">
-                            <h4>Biblical Teaching</h4>
-                            <p>In-depth lessons covering prophecy and biblical law</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🤝</div>
-                        <div class="feature-content">
-                            <h4>Fellowship</h4>
-                            <p>Join a community of believers seeking truth together</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🌐</div>
-                        <div class="feature-content">
-                            <h4>Live Streaming</h4>
-                            <p>Can't attend in person? Watch our services online</p>
-                        </div>
+    <!-- About Section with Image Carousel -->
+<section class="about" id="about">
+    <div class="about-content">
+        <div class="about-text">
+            <h2>About The Household of Faith</h2>
+            <p>The Household Of Faith welcomes you to join our service every Sabbath day as we explore the depths of Biblical truth together.</p>
+            <p>Our ministry is dedicated to teaching the uncut word of God, covering everything from prophecy to the laws stipulated in the Holy Bible through comprehensive, in-depth lessons.</p>
+            
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">📖</div>
+                    <div class="feature-content">
+                        <h4>Biblical Teaching</h4>
+                        <p>In-depth lessons covering prophecy and biblical law</p>
                     </div>
                 </div>
-            </div>
-            <div class="about-image">
-                <div class="image-placeholder">
-                    📖
+                <div class="feature-item">
+                    <div class="feature-icon">🤝</div>
+                    <div class="feature-content">
+                        <h4>Fellowship</h4>
+                        <p>Join a community of believers seeking truth together</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <div class="feature-content">
+                        <h4>Live Streaming</h4>
+                        <p>Can't attend in person? Watch our services online</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="about-image">
+            <div class="carousel-container">
+                <div class="carousel-slides">
+                    <div class="carousel-slide">
+                        <img src="church-photo-1.jpg" alt="Church congregation worshiping together">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="church-photo-2.jpg" alt="Bible study group session">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="church-photo-3.jpg" alt="Church event and fellowship">
+                    </div>
+                </div>
+                <button class="carousel-prev">❮</button>
+                <button class="carousel-next">❯</button>
+            </div>
+            <div class="carousel-dots"></div>
+        </div>
+    </div>
+</section>
 
     <!-- Services Section -->
     <section class="services" id="services">
@@ -1067,6 +1173,64 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             alert('Thank you for subscribing! You will receive updates about our services.');
             e.target.reset();
         });
+
+        // Image Carousel Functionality
+const carouselContainer = document.querySelector('.carousel-container');
+if (carouselContainer) {
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    
+    // Create dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('carousel-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+    
+    const dots = document.querySelectorAll('.carousel-dot');
+    
+    function updateDots() {
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+    
+    function goToSlide(index) {
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+        currentIndex = index;
+        const offset = -currentIndex * 100;
+        document.querySelector('.carousel-slides').style.transform = `translateX(${offset}%)`;
+        updateDots();
+    }
+    
+    function nextSlide() {
+        goToSlide(currentIndex + 1);
+    }
+    
+    function prevSlide() {
+        goToSlide(currentIndex - 1);
+    }
+    
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    
+    // Auto-rotate every 5 seconds (optional, remove if not wanted)
+    let autoRotate = setInterval(nextSlide, 5000);
+    
+    // Pause auto-rotate on hover
+    carouselContainer.addEventListener('mouseenter', () => clearInterval(autoRotate));
+    carouselContainer.addEventListener('mouseleave', () => {
+        autoRotate = setInterval(nextSlide, 5000);
+    });
+}
     </script>
 </body>
 </html>
